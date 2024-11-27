@@ -10,7 +10,11 @@ FROM node:alpine AS build
 
 WORKDIR /fluent-reader
 COPY --from=base /git/fluent-reader .
-RUN npm install && npm run build
+RUN npm install --global pnpm && \
+    export COREPACK_ENABLE_STRICT=0 && \
+    pnpm install && \
+    pnpm build
+
 
 FROM lipanski/docker-static-website
 
